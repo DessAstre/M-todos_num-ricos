@@ -1,0 +1,296 @@
+% ============================================================
+%  EXAMEN PARCIALITO 5  —  Métodos Numéricos
+%  Compilar:  make   (o  latexmk -pdf 5toparcialito.tex)
+% ============================================================
+\documentclass[12pt,letterpaper]{article}
+
+% ── Codificación e idioma ──────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+% ── Matemáticas ───────────────────────────────────────────
+\usepackage{amsmath,amssymb,mathtools}
+
+% ── Tablas ────────────────────────────────────────────────
+\usepackage{booktabs,array,multirow}
+
+% ── Listas ────────────────────────────────────────────────
+\usepackage{enumitem}
+
+% ── Figuras ───────────────────────────────────────────────
+\usepackage{graphicx}
+\graphicspath{{./capturas/}}   % imágenes en subcarpeta capturas/
+
+% ── Geometría ─────────────────────────────────────────────
+\usepackage[top=2.2cm,bottom=2.2cm,left=2.5cm,right=2.5cm]{geometry}
+
+% ── Colores y cajas ───────────────────────────────────────
+\usepackage{xcolor,mdframed}
+
+% ── Encabezado / pie de página ────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Métodos Numéricos}
+\lhead{\small Francisco Javier Ponce Sáenz — a325000}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Contadores de problemas ───────────────────────────────
+\newcounter{problema}
+\newenvironment{problema}[1][]{%
+  \refstepcounter{problema}%
+  \begin{mdframed}[
+      linewidth=1pt,
+      linecolor=black!40,
+      backgroundcolor=gray!6,
+      innertopmargin=6pt,
+      innerbottommargin=6pt
+  ]
+  \noindent\textbf{Problema \theproblema}%
+  \ifx&#1&\else\ \textbf{— #1}\fi\par\smallskip
+}{%
+  \end{mdframed}\vspace{6pt}
+}
+
+\newenvironment{solucion}{%
+  \vspace{4pt}\noindent\textbf{Solución:}\par\smallskip
+}{%
+  \par
+}
+
+% ── Comandos útiles ───────────────────────────────────────
+\newcommand{\respuesta}[1]{\par\medskip\noindent\fbox{\textbf{Resultado:}~#1}}
+\newcommand{\tol}[1]{\textrm{Tol} = #1}
+
+% ─────────────────────────────────────────────────────────
+\begin{document}
+% ─────────────────────────────────────────────────────────
+
+% ══════════════════  PORTADA  ════════════════════════════
+\begin{center}
+  {\large\bfseries Universidad Autónoma de Chihuahua}\\[2pt]
+  {\large Facultad de Ingeniería}\\[6pt]
+  \rule{\linewidth}{0.8pt}\\[4pt]
+  {\LARGE\bfseries Examen Parcialito 5}\\[4pt]
+  \rule{\linewidth}{0.8pt}\\[6pt]
+  {\large Métodos Numéricos}\\[4pt]
+  {\large Francisco Javier Ponce Sáenz \quad|\quad a325000}\\[2pt]
+  {\large\today}
+\end{center}
+
+\vspace{8pt}
+
+% ══════════════════  PROBLEMA 1  ════════════════════════
+\begin{problema}[Ajuste de Curvas por Mínimos Cuadrados]
+
+De la siguiente serie de puntos:
+
+\begin{center}
+\begin{tabular}{c|rrrrrrr}
+  \toprule
+  $x$ & $-4$ & $-3$ & $-2$ & $-1$ & $0$ & $1$ & $2$ \\
+  \midrule
+  $y$ & $-3$ & $11$ & $13$ & $9$ & $5$ & $7$ & $21$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Obtener:
+\begin{enumerate}[label=\alph*)]
+  \item Ajuste de curvas de 1er orden.
+  \item Ajuste de curvas de 2do orden.
+  \item Ajuste de curvas de 3er orden.
+  \item ¿Cuál de las tres funciones es la más exacta y por qué?
+  \item Completar la tabla para $x \in \{-5,\,3,\,4,\,5\}$.
+\end{enumerate}
+
+\noindent\textit{Notas: (1) El SELS formado se resuelve por eliminación de Gauss.
+(2) Se incluye el procedimiento de elaboración del SELS y su resolución.}
+
+% ───── SOLUCIÓN ──────────────────────────────────────────
+\begin{solucion}
+
+% ── Sumas ─────────────────────────────────────────────
+\subsection*{Sumas necesarias ($n = 7$)}
+
+\[
+  \sum x = -7, \quad
+  \sum y = 63, \quad
+  \sum x^2 = 35, \quad
+  \sum x^3 = -91, \quad
+  \sum x^4 = 371
+\]
+\[
+  \sum x^5 = -1267, \quad
+  \sum x^6 = 4955, \quad
+  \sum xy = -7, \quad
+  \sum x^2 y = 203, \quad
+  \sum x^3 y = -43
+\]
+
+\begin{center}
+  \includegraphics[width=0.82\linewidth]{08_sistema_normal.png}\\
+  {\small\itshape Sumas necesarias y sistema de ecuaciones normales (grado 3).}
+\end{center}
+
+% ── Inciso a ──────────────────────────────────────────
+\subsection*{a) Ajuste de 1er orden — $Y_1 = K_0 + K_1 x$}
+
+Sistema normal (2×2):
+\[
+  \begin{pmatrix} 7 & -7 \\ -7 & 35 \end{pmatrix}
+  \begin{pmatrix} K_0 \\ K_1 \end{pmatrix}
+  =
+  \begin{pmatrix} 63 \\ -7 \end{pmatrix}
+\]
+
+Eliminación de Gauss: $R_2 \leftarrow R_2 + R_1$ y $R_2 \leftarrow R_2/28$:
+\[
+  K_1 = 2, \qquad K_0 = 11
+\]
+
+\[
+  \boxed{Y_1 = 11 + 2x} \qquad \text{RSS}_1 = 216
+\]
+
+% ── Inciso b ──────────────────────────────────────────
+\subsection*{b) Ajuste de 2do orden — $Y_2 = K_0 + K_1 x + K_2 x^2$}
+
+Al resolver el sistema 3$\times$3 por Gauss se llega a $84\,K_2 = 0$,
+por lo que $K_2 = 0$ y los demás coeficientes quedan igual que en $Y_1$:
+
+\[
+  K_0 = 11, \quad K_1 = 2, \quad K_2 = 0
+\]
+
+\begin{mdframed}[linecolor=orange!80!black, linewidth=1.2pt, backgroundcolor=orange!8]
+Como $K_2 = 0$, $Y_2$ es igual a $Y_1$. El ajuste de 2do orden no aplica para estos datos.
+\[
+  Y_2 = 11 + 2x + 0\cdot x^2 = Y_1 \qquad \text{RSS}_2 = 216
+\]
+\end{mdframed}
+
+% ── Inciso c ──────────────────────────────────────────
+\subsection*{c) Ajuste de 3er orden — $Y_3 = K_0 + K_1 x + K_2 x^2 + K_3 x^3$}
+
+Sistema normal (SSELS 4×4):
+\[
+  \begin{pmatrix}
+    7   & -7   & 35   & -91  \\
+   -7   & 35   & -91  & 371  \\
+   35   & -91  & 371  & -1267 \\
+   -91  & 371  & -1267 & 4955
+  \end{pmatrix}
+  \begin{pmatrix} K_0 \\ K_1 \\ K_2 \\ K_3 \end{pmatrix}
+  =
+  \begin{pmatrix} 63 \\ -7 \\ 203 \\ -43 \end{pmatrix}
+\]
+
+Resuelto por Gauss-Jordan $\Rightarrow$
+$K_0 = 5,\; K_1 = -2,\; K_2 = 3,\; K_3 = 1$.
+
+\[
+  \boxed{Y_3 = 5 - 2x + 3x^2 + x^3} \qquad \text{RSS}_3 = 0
+\]
+
+% ── Inciso d ──────────────────────────────────────────
+\subsection*{d) Función más exacta}
+
+Dado que $K_2 = 0$, el ajuste de 2do orden ($Y_2$) es idéntico al de 1er orden
+($Y_1$) y \textbf{se descarta como función independiente}.
+La comparación real es entre $Y_1$ y $Y_3$:
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Función & Válida & RSS \\
+  \midrule
+  $Y_1 = 11 + 2x$ & Sí & 216 \\
+  $Y_2 = 11 + 2x + 0\,x^2$ & \textbf{No} ($K_2=0$, $Y_2\equiv Y_1$) & 216 \\
+  $Y_3 = 5 - 2x + 3x^2 + x^3$ & Sí & \textbf{0} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Se elige $\mathbf{Y_3}$ porque $\text{RSS}_3 = 0$: el polinomio de grado 3
+pasa \emph{exactamente} por los siete puntos de la tabla.
+
+% ── Inciso e ──────────────────────────────────────────
+\subsection*{e) Predicciones con $Y_3$}
+
+\begin{center}
+\begin{tabular}{r|r}
+  \toprule
+  $x$ & $Y_3(x) = 5 - 2x + 3x^2 + x^3$ \\
+  \midrule
+  $-5$ & $\mathbf{-35}$ \\
+  $3$  & $\mathbf{53}$  \\
+  $4$  & $\mathbf{109}$ \\
+  $5$  & $\mathbf{195}$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\respuesta{$Y_3 = 5 - 2x + 3x^2 + x^3$\quad (RSS = 0; ajuste exacto de 3er orden)}
+
+\end{solucion}
+\end{problema}
+
+% ══════════════════  EVIDENCIA COMPUTACIONAL  ════════════════════
+\newpage
+\section*{Evidencia computacional — Hoja de cálculo}
+
+Las siguientes capturas corresponden a los cuadros generados por el
+programa \texttt{ajuste\_curvas\_app.py} al ejecutar la hoja de cálculo
+con los datos del problema.
+
+% ── Figura 1 ─────────────────────────────────────────────
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.45\linewidth]{01_datos.png}
+  \caption{Tab \emph{Datos de entrada} — tabla de los 7 puntos.}
+\end{figure}
+
+% ── Figura 2 ─────────────────────────────────────────────
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{02_procedimiento.png}
+  \caption{Tab \emph{Tabla del procedimiento} — potencias de $x$, productos y sumas.}
+\end{figure}
+
+\newpage
+
+% ── Figura 3 ─────────────────────────────────────────────
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{03_desviaciones.png}
+  \caption{Tab \emph{Tabla de desviaciones} — La columna $Y_2$ (naranja) es idéntica a $Y_1$ porque $K_2=0$.}
+\end{figure}
+
+% ── Figura 4 ─────────────────────────────────────────────
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.88\linewidth]{04_grafica.png}
+  \caption{Tab \emph{Gráfica} — curvas de ajuste superpuestas con los datos originales.}
+\end{figure}
+
+\newpage
+
+% ── Figura 5 ─────────────────────────────────────────────
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.50\linewidth]{05_evaluacion.png}
+  \caption{Tab \emph{Evaluación exacta} — $Y_3$ evaluada en $x \in \{-5, 3, 4, 5\}$.}
+\end{figure}
+
+% ── Figura 6 ─────────────────────────────────────────────
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{07_ssels.png}
+  \caption{Tab \emph{SSELS} — eliminación de Gauss-Jordan del sistema 4×4 paso a paso.}
+\end{figure}
+
+% ══════════════════  FIN  ═══════════════════════════════
+\end{document}

@@ -1,0 +1,82 @@
+PROYECTO UNIFICADO — MÉTODOS NUMÉRICOS
+=======================================
+
+Aryam Desiree Méndez Sánchez       · 373025
+Francisco Javier Ponce Saenz       · 325000
+
+Facultad de Ingeniería · Universidad Autónoma de Chihuahua
+
+---------------------------------------------------------------------
+EJECUCIÓN
+---------------------------------------------------------------------
+
+Desde la raíz del proyecto:
+
+    python main.py
+
+Requisitos opcionales:
+    - Pillow (PIL)  → mejora la carga de los escudos institucionales.
+    - numpy         → acelera la evaluación de integrales con
+                      funciones trigonométricas.
+
+---------------------------------------------------------------------
+ATAJOS DENTRO DE LA APLICACIÓN
+---------------------------------------------------------------------
+
+    F11             Alterna entre pantalla completa y ventana
+    Esc             Sale de pantalla completa
+    Rueda del ratón Desplazamiento vertical en cualquier vista
+    Combobox        Cambio rápido de subtema dentro de cada
+                    calculadora (sin volver al menú)
+
+---------------------------------------------------------------------
+ESTRUCTURA DEL PROYECTO
+---------------------------------------------------------------------
+
+    Proyecto_Metodos_Numericos/
+    │
+    ├── main.py              ←  punto de entrada
+    │
+    ├── app/                 ←  capa de presentación (Tkinter)
+    │   ├── tema.py          ·  colores, fuentes y estilos clásicos
+    │   ├── widgets.py       ·  scroll, botones, encabezado, tarjetas
+    │   ├── contenido.py     ·  textos, fórmulas y ejemplos por tema
+    │   ├── evaluador.py     ·  evaluador seguro de expresiones
+    │   └── aplicacion.py    ·  flujo principal y calculadoras
+    │
+    ├── nucleo/              ←  algoritmos numéricos puros
+    │   ├── raices.py            (Bisección, Falsa Pos., Newton-Raphson)
+    │   ├── ssel_exactos.py      (Gauss, Gauss-Jordan, Inversa, Cramer)
+    │   ├── ssel_iterativos.py   (Gauss-Seidel y Relajaciones)
+    │   ├── interpolacion.py     (Lineal y Lagrange)
+    │   ├── integracion.py       (Trapecio, Simpson, 2/45, Romberg)
+    │   └── ajuste_curvas.py     (Mínimos Cuadrados Polinomiales)
+    │
+    ├── recursos/
+    │   ├── imagenes/        ·  fing.png, uach.png y capturas usadas
+    │   └── documentos/      ·  PDFs, LaTeX y apuntes
+    │
+    └── extras/              ←  scripts heredados (referencia/archivo)
+        ├── parcial1/        ·  programa_principal.py, programa_ssel.py
+        ├── parcial2/        ·  apps de Gauss-Seidel e Interpolación
+        ├── parcial3/        ·  apps de Integración y Ajuste
+        └── scripts_originales/  guiones standalone originales
+                                 (M-todos_num-ricos)
+
+---------------------------------------------------------------------
+TEMA VISUAL
+---------------------------------------------------------------------
+
+El tema "clásico-elegante" emplea:
+
+    Fondo página       pergamino cálido       (#F1EADA)
+    Encabezado         nogal profundo         (#2A1E18)
+    Tarjetas           marfil cálido          (#FBF8F1)
+    Texto              chocolate              (#3A2E22)
+    Acentos            oro envejecido, borgoña, verde bosque
+                       y azul medianoche
+    Tipografía         Cambria / Georgia (serif) + Segoe UI
+                       Consolas para datos y consola de resultados
+
+Para ajustar el tema, modifique únicamente el archivo:
+    app/tema.py

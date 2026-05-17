@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\begin{document}
+
+% Portada
+\begin{titlepage}
+    \centering
+    \includegraphics[height=2cm]{fing.png}\hfill
+    \includegraphics[height=2cm]{uach.png}
+    \\
+    \vspace{1.5cm}
+    {\Large \textbf{Universidad Autónoma de Chihuahua}}\\[0.2cm]
+    {\large Facultad de Ingeniería}\\[0.5cm]
+    {\Large \textbf{Métodos Numéricos}}\\[0.5cm]
+    {\large Examen Parcialito 2}\\[0.2cm]
+    {\large S.S.E.L.S}\\[1cm]
+
+    \vspace{1cm}
+    {\large Nombre: \underline{Francisco Javier Ponce Saenz}}\\[0.3cm]
+    {\large Matrícula: \underline{a325000}}\\[0.3cm]
+    {\large Semestre: \underline{3er Semestre}}\\[0.3cm]
+    {\large Fecha: \underline{\hspace{4cm}}}\\
+    \vfill
+\end{titlepage}
+
+\section*{Examen}
+
+Resuelva el siguiente sistema de ecuaciones lineales simultáneas por los métodos solicitados:
+
+\[
+\begin{aligned}
+    2x + 3y - 5z + 4t &= 11 \\
+    3x - 2y + z  - 2t &= 2 \\
+    4x - 6y + 10z - 3t &= 7 \\
+    -3x - 3y + 5z - 2t &= -12
+\end{aligned}
+\]
+
+\begin{enumerate}[label=\Alph*)]
+    \item Eliminación de Gauss.\\
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.45\textwidth]{gauss.png}\hfill
+        \includegraphics[width=0.45\textwidth]{gauss2.png}
+        \\
+        \includegraphics[width=0.45\textwidth]{gauss3.png}
+        \caption{Pasos de la eliminación de Gauss (parte 1).}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.7\textwidth]{gauss4.png}
+        \caption{Paso adicional de la eliminación de Gauss (parte 2).}
+    \end{figure}
+
+    \vspace{1cm}
+
+    \item Matriz inversa.\\
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.45\textwidth]{inversa.png}\hfill
+        \includegraphics[width=0.45\textwidth]{inversa2.png}
+        \\
+        \includegraphics[width=0.45\textwidth]{inversa3.png}
+        \caption{Pasos para obtener la matriz inversa (parte 1).}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.7\textwidth]{inversa4.png}
+        \caption{Paso adicional para obtener la matriz inversa (parte 2).}
+    \end{figure}
+
+    \vspace{1cm}
+\end{enumerate}
+
+\end{document}

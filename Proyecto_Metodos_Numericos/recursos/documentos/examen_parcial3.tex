@@ -1,0 +1,436 @@
+% ============================================================
+%  EXAMEN PARCIAL 3  —  Métodos Numéricos
+%  Tema: Integración Numérica Definida
+%  Compilar:  latexmk -pdf examen_parcial3.tex
+% ============================================================
+\documentclass[12pt,letterpaper]{article}
+
+% ── Codificación e idioma ──────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+% ── Matemáticas ───────────────────────────────────────────
+\usepackage{amsmath,amssymb,mathtools}
+
+% ── Tablas ────────────────────────────────────────────────
+\usepackage{booktabs,array,multirow}
+
+% ── Listas ────────────────────────────────────────────────
+\usepackage{enumitem}
+
+% ── Figuras ───────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{./capturas/}}   % imágenes en subcarpeta capturas/
+
+% ── Geometría ─────────────────────────────────────────────
+\usepackage[top=2.2cm,bottom=2.2cm,left=2.5cm,right=2.5cm]{geometry}
+
+% ── Colores y cajas ───────────────────────────────────────
+\usepackage{xcolor,mdframed}
+
+% ── Encabezado / pie de página ────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Métodos Numéricos}
+\lhead{\small Francisco Javier Ponce Sáenz — a325000}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Entorno problema ──────────────────────────────────────
+\newcounter{problema}
+\newenvironment{problema}[1][]{%
+  \refstepcounter{problema}%
+  \begin{mdframed}[
+      linewidth=1pt,
+      linecolor=black!40,
+      backgroundcolor=gray!6,
+      innertopmargin=6pt,
+      innerbottommargin=6pt
+  ]
+  \noindent\textbf{Problema \theproblema}%
+  \ifx&#1&\else\ \textbf{— #1}\fi\par\smallskip
+}{%
+  \end{mdframed}\vspace{6pt}
+}
+
+\newenvironment{solucion}{%
+  \vspace{4pt}\noindent\textbf{Solución:}\par\smallskip
+}{%
+  \par
+}
+
+% ── Comandos útiles ───────────────────────────────────────
+\newcommand{\respuesta}[1]{\par\medskip\noindent\fbox{\textbf{Resultado:}~#1}}
+\newcommand{\tol}[1]{\textrm{Tol} = #1}
+
+% ── Colores de método ─────────────────────────────────────
+\definecolor{azulmetodo}{RGB}{0,70,140}
+\definecolor{verdemetodo}{RGB}{0,110,60}
+\definecolor{rojometodo}{RGB}{140,20,20}
+\definecolor{naranjametodo}{RGB}{180,80,0}
+
+% ─────────────────────────────────────────────────────────
+\begin{document}
+% ─────────────────────────────────────────────────────────
+
+% ══════════════════  PORTADA  ════════════════════════════
+\begin{center}
+  {\large\bfseries Universidad Autónoma de Chihuahua}\\[2pt]
+  {\large Facultad de Ingeniería}\\[6pt]
+  \rule{\linewidth}{0.8pt}\\[4pt]
+  {\LARGE\bfseries Examen Parcial 3}\\[4pt]
+  {\large Integración Numérica Definida}\\[4pt]
+  \rule{\linewidth}{0.8pt}\\[6pt]
+  {\large Métodos Numéricos}\\[4pt]
+  {\large Francisco Javier Ponce Sáenz \quad|\quad a325000}\\[2pt]
+  {\large\today}
+\end{center}
+
+\vspace{8pt}
+
+% ══════════════════  FORMULARIO DE REFERENCIA  ══════════════════
+\begin{mdframed}[linecolor=azulmetodo, linewidth=1.2pt, backgroundcolor=blue!4,
+                  innertopmargin=8pt, innerbottommargin=8pt]
+\noindent\textbf{\textcolor{azulmetodo}{Formulario — Integración Numérica}}
+\vspace{4pt}
+
+\textbf{Paso:}
+\[
+  h = \frac{b - a}{N}
+\]
+
+\begin{center}
+\begin{tabular}{llcc}
+  \toprule
+  Método & Fórmula & Factor & Restricción ($N$) \\
+  \midrule
+  Trapecio
+    & $f(a) + 2\displaystyle\sum_{i=1}^{N-1}f(x_i) + f(b)$
+    & $\dfrac{h}{2}$ & cualquier $N$ \\[8pt]
+  Simpson $\tfrac{1}{3}$
+    & $f(a) + 4\displaystyle\sum_{\text{impar}}f(x_i) + 2\displaystyle\sum_{\text{par}}f(x_i) + f(b)$
+    & $\dfrac{h}{3}$ & $N$ múltiplo de 2 \\[8pt]
+  Regla $\tfrac{3}{8}$
+    & $f(a) + 3\displaystyle\sum_{i\neq 3k}f(x_i) + 2\displaystyle\sum_{3k}f(x_i) + f(b)$
+    & $\dfrac{3h}{8}$ & $N$ múltiplo de 3 \\[8pt]
+  Boole ($\tfrac{2}{45}$)
+    & $7f(a) + 32\displaystyle\sum_{\text{impar}}f(x_i) + 12\displaystyle\sum_{\substack{\text{par}\\{\not\equiv 0\,(4)}}}f(x_i) + 14\displaystyle\sum_{4k}f(x_i) + 7f(b)$
+    & $\dfrac{2h}{45}$ & $N$ múltiplo de 4 \\[8pt]
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Richardson (Límite Diferido):}
+\[
+  I_{\text{LDR}} = I_h + (I_k - I_h)\cdot\frac{h^2}{h^2 - k^2}
+  \qquad \bigl(k = h/2 \;\Rightarrow\; N_k = 2N_h\bigr)
+\]
+\end{mdframed}
+
+\vspace{10pt}
+
+% ══════════════════  PROBLEMA 1  ════════════════════════
+\begin{problema}[Método Trapecial y Richardson]
+
+% --- ENUNCIADO (completar con el ejercicio del examen) ---
+Calcule la siguiente integral definida aplicando el \textbf{Método Trapecial} y
+el \textbf{Límite Diferido de Richardson}:
+
+\[
+  \int_{a}^{b} f(x)\,dx
+  \qquad\qquad
+  % Sustituir a, b, f(x) y el valor de N
+  a = \rule{1.5cm}{0.4pt},\quad
+  b = \rule{1.5cm}{0.4pt},\quad
+  N_1 = \rule{1.5cm}{0.4pt},\quad
+  N_2 = \rule{1.5cm}{0.4pt}
+\]
+
+% ───── SOLUCIÓN ──────────────────────────────────────────
+\begin{solucion}
+
+\subsection*{a) Parámetros}
+
+\[
+  h_1 = \frac{b-a}{N_1} = \rule{2cm}{0.4pt},
+  \qquad
+  h_2 = \frac{b-a}{N_2} = \rule{2cm}{0.4pt}
+\]
+
+\subsection*{b) Tabla del Método Trapecial ($N_1$)}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+  \toprule
+  $x_i$ & $f(x_i)$ & Coef. \\
+  \midrule
+  $a$  & & $\times 1$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+  $b$  & & $\times 1$ \\[3pt]
+  \midrule
+  \multicolumn{2}{l|}{Sumatoria} & \rule{2cm}{0.4pt} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\[
+  I_{h_1} = \frac{h_1}{2}\cdot(\text{sumatoria}) = \rule{3cm}{0.4pt}
+\]
+
+\subsection*{c) Tabla del Método Trapecial ($N_2$)}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+  \toprule
+  $x_i$ & $f(x_i)$ & Coef. \\
+  \midrule
+  $a$  & & $\times 1$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+       & & $\times 2$ \\[3pt]
+  $b$  & & $\times 1$ \\[3pt]
+  \midrule
+  \multicolumn{2}{l|}{Sumatoria} & \rule{2cm}{0.4pt} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\[
+  I_{h_2} = \frac{h_2}{2}\cdot(\text{sumatoria}) = \rule{3cm}{0.4pt}
+\]
+
+\subsection*{d) Límite Diferido de Richardson}
+
+\[
+  I_{\text{LDR}}
+  = I_{h_1} + (I_{h_2} - I_{h_1})\cdot\frac{h_1^2}{h_1^2 - h_2^2}
+  = \rule{4cm}{0.4pt}
+\]
+
+\respuesta{$I_T(N_1) = \rule{2.5cm}{0.4pt}$, \quad
+           $I_T(N_2) = \rule{2.5cm}{0.4pt}$, \quad
+           $I_{\text{LDR}} = \rule{2.5cm}{0.4pt}$}
+
+\end{solucion}
+\end{problema}
+
+% ══════════════════  PROBLEMA 2  ════════════════════════
+\begin{problema}[Newton-Cotes — $N = 12$]
+
+% --- ENUNCIADO ---
+Calcule la siguiente integral aplicando los \textbf{cuatro métodos de Newton-Cotes}
+con $N = 12$:
+
+\[
+  \int_{a}^{b} f(x)\,dx,
+  \qquad
+  a = \rule{1.5cm}{0.4pt},\quad
+  b = \rule{1.5cm}{0.4pt}
+\]
+
+\begin{solucion}
+
+\subsection*{Parámetros}
+
+\[
+  N = 12, \qquad
+  h = \frac{b - a}{12} = \rule{2.5cm}{0.4pt}
+\]
+
+\subsection*{Tabla de valores ($x_i$, $f(x_i)$) y coeficientes}
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c}
+  \toprule
+  $i$ & $x_i$ & $f(x_i)$ & Trap. & Simp. $\tfrac{1}{3}$ & Regla $\tfrac{3}{8}$ \\
+  \midrule
+  0  & $a$   & & 1 & 1  & 1  \\[3pt]
+  1  &       & & 2 & 4  & 3  \\[3pt]
+  2  &       & & 2 & 2  & 3  \\[3pt]
+  3  &       & & 2 & 4  & 2  \\[3pt]
+  4  &       & & 2 & 2  & 3  \\[3pt]
+  5  &       & & 2 & 4  & 3  \\[3pt]
+  6  &       & & 2 & 2  & 2  \\[3pt]
+  7  &       & & 2 & 4  & 3  \\[3pt]
+  8  &       & & 2 & 2  & 3  \\[3pt]
+  9  &       & & 2 & 4  & 2  \\[3pt]
+  10 &       & & 2 & 2  & 3  \\[3pt]
+  11 &       & & 2 & 4  & 3  \\[3pt]
+  12 & $b$   & & 1 & 1  & 1  \\[3pt]
+  \midrule
+  \multicolumn{2}{c|}{Sumatoria} & &
+    \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{6pt}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+  \toprule
+  $i$ & $x_i$ & Boole ($\tfrac{2}{45}$) \\
+  \midrule
+  0  & $a$   & 7  \\[3pt]
+  1  &       & 32 \\[3pt]
+  2  &       & 12 \\[3pt]
+  3  &       & 32 \\[3pt]
+  4  &       & 14 \\[3pt]
+  5  &       & 32 \\[3pt]
+  6  &       & 12 \\[3pt]
+  7  &       & 32 \\[3pt]
+  8  &       & 14 \\[3pt]
+  9  &       & 32 \\[3pt]
+  10 &       & 12 \\[3pt]
+  11 &       & 32 \\[3pt]
+  12 & $b$   & 7  \\[3pt]
+  \midrule
+  \multicolumn{2}{c|}{Sumatoria} & \rule{1.2cm}{0.4pt} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Resultados por método}
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  Método & Fórmula aplicada & Resultado \\
+  \midrule
+  Trapecio
+    & $I_T = \dfrac{h}{2}\cdot\Sigma$
+    & \rule{3cm}{0.4pt} \\[10pt]
+  Simpson $\tfrac{1}{3}$
+    & $I_S = \dfrac{h}{3}\cdot\Sigma$
+    & \rule{3cm}{0.4pt} \\[10pt]
+  Regla $\tfrac{3}{8}$
+    & $I_{3/8} = \dfrac{3h}{8}\cdot\Sigma$
+    & \rule{3cm}{0.4pt} \\[10pt]
+  Boole ($\tfrac{2}{45}$)
+    & $I_B = \dfrac{2h}{45}\cdot\Sigma$
+    & \rule{3cm}{0.4pt} \\[6pt]
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\respuesta{Trapecio $= \rule{2cm}{0.4pt}$, \;
+           Simp.\ $\frac{1}{3} = \rule{2cm}{0.4pt}$, \;
+           Regla $\frac{3}{8} = \rule{2cm}{0.4pt}$, \;
+           Boole $= \rule{2cm}{0.4pt}$}
+
+\end{solucion}
+\end{problema}
+
+% ══════════════════  PROBLEMA 3 (opcional)  ════════════════════
+\begin{problema}[Problema adicional]
+
+% --- ENUNCIADO ---
+\[
+  \int_{a}^{b} f(x)\,dx
+  \qquad
+  a = \rule{1.5cm}{0.4pt},\quad
+  b = \rule{1.5cm}{0.4pt},\quad
+  N = \rule{1.5cm}{0.4pt}
+\]
+
+\begin{solucion}
+
+\[
+  h = \frac{b-a}{N} = \rule{2.5cm}{0.4pt}
+\]
+
+% Tabla genérica — ampliar o reducir filas según N
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c}
+  \toprule
+  $i$ & $x_i$ & $f(x_i)$ & Trap. & Simp. $\tfrac{1}{3}$ & Regla $\tfrac{3}{8}$ \\
+  \midrule
+  & & & & & \\[3pt]
+  & & & & & \\[3pt]
+  & & & & & \\[3pt]
+  & & & & & \\[3pt]
+  & & & & & \\[3pt]
+  & & & & & \\[3pt]
+  & & & & & \\[3pt]
+  \midrule
+  \multicolumn{2}{c|}{Sumatoria} & &
+    \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\respuesta{$\rule{6cm}{0.4pt}$}
+
+\end{solucion}
+\end{problema}
+
+% ══════════════════  EVIDENCIA COMPUTACIONAL  ════════════════════
+\newpage
+\section*{Evidencia computacional — Capturas del programa}
+
+Las siguientes capturas corresponden a los resultados generados por el
+programa \texttt{integracion\_app.py}.
+
+% ── Captura 1 ─────────────────────────────────────────────
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{01_datos.png}
+  \caption{Datos de entrada — función, límites $a$, $b$ y valor de $N$.}
+\end{figure}
+
+% ── Captura 2 ─────────────────────────────────────────────
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{02_tabla_trapecio.png}
+  \caption{Tabla del Método Trapecial con coeficientes y sumatoria.}
+\end{figure}
+
+\newpage
+
+% ── Captura 3 ─────────────────────────────────────────────
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{03_tabla_newton_cotes.png}
+  \caption{Tabla de Newton-Cotes: Simpson $\tfrac{1}{3}$, Regla $\tfrac{3}{8}$ y Boole.}
+\end{figure}
+
+% ── Captura 4 ─────────────────────────────────────────────
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\linewidth]{04_richardson.png}
+  \caption{Aplicación del Límite Diferido de Richardson con $N$ y $2N$.}
+\end{figure}
+
+\newpage
+
+% ── Captura 5 ─────────────────────────────────────────────
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\linewidth]{05_resultados.png}
+  \caption{Resumen de resultados — comparación de los métodos aplicados.}
+\end{figure}
+
+% ── Captura 6 (extra, si aplica) ──────────────────────────
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.82\linewidth]{06_extra.png}
+%   \caption{Captura adicional.}
+% \end{figure}
+
+% ══════════════════  FIN  ═══════════════════════════════
+\end{document}
