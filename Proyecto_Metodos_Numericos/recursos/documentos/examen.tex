@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\begin{document}
+
+% Portada
+\begin{titlepage}
+    \centering
+    \includegraphics[height=2cm]{fing.png}\hfill
+    \includegraphics[height=2cm]{uach.png}
+    \\
+    \vspace{1.5cm}
+    {\Large \textbf{Universidad Autónoma de Chihuahua}}\\[0.2cm]
+    {\large Facultad de Ingeniería}\\[0.5cm]
+    {\Large \textbf{Métodos Numéricos}}\\[0.5cm]
+    {\large Examen Parcialito 1}\\[1cm]
+
+    \vspace{1cm}
+    {\large Nombre: \underline{Francisco Javier Ponce Saenz}}\\[0.3cm]
+    {\large Matrícula: \underline{a325000}}\\[0.3cm]
+    {\large Semestre: \underline{3er Semestre}}\\[0.3cm]
+    {\large Fecha: \underline{\hspace{4cm}}}\\
+    \vfill
+\end{titlepage}
+
+\section*{Examen}
+
+Obtener la raíz de las siguientes funciones por el método que se indique:
+
+\begin{enumerate}[label=\alph*)]
+    \item Método Newton--Raphson mejorado:
+    \[
+    \text{Tol}: 0.001,\quad y=\sin(x),\quad x_0=0.6
+    \]
+    Respuesta:\rule{3cm}{0.4pt}
+    
+    \begin{figure}[h]
+        \centering
+        % tabla adicional para el método de Newton--Raphson
+        \includegraphics[width=0.6\textwidth]{tabla1.png}
+        \caption{Tabla adicional para el método de Newton--Raphson.}
+    \end{figure}
+    
+    \item Método de falsa posición:
+    \[
+    y = \frac{\sqrt{x^2+2}\,(x+5)}{(x^2-3x-2)^2\,(x+4)^3},\quad a=0,\ b=7,\ \text{Tol}=0.01
+    \]
+    Respuesta:\rule{3cm}{0.4pt}
+    
+    \begin{figure}[h]
+        \centering
+        % tabla para falsa posición
+        \includegraphics[width=0.6\textwidth]{tabla2.png}
+        \caption{Tabla adicional al aplicar falsa posición.}
+    \end{figure}
+    \noindent Debido a que $f(0)=113.137$ y $f(7)=168.732$ tienen el mismo signo, el teorema del valor intermedio no
+    garantiza ninguna raíz en $[0,7]$, por lo que el método falla.
+    
+    \item Método de bisección del intervalo:
+    \[
+    y = \frac{\left(\sqrt{3x^3+2x^2+4}\right)^2\,(x-3)}{(x^2+6x+7)^1\,(x^2+7)^2},\quad a=0,\ b=5,\ \text{Tol}=0.01
+    \]
+    Respuesta:\rule{3cm}{0.4pt}
+    \\
+    \begin{figure}[h]
+        \centering
+        % tabla para bisección
+        \includegraphics[width=0.6\textwidth]{tabla3.png}
+        \caption{Tabla adicional para el método de bisección.}
+    \end{figure}
+\end{enumerate}
+
+\end{document}
