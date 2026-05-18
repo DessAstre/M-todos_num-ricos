@@ -12,7 +12,7 @@ class PresentationApp:
         self.root.title("Presentación: Métodos de Raíces")
         self.root.geometry("1100x650")
         self.root.minsize(1000, 600)
-        self.root.configure(bg="#0f172a")
+        self.root.configure(bg="#f8f9fa")
 
         self.pages = []
         self.current_page = 0
@@ -26,17 +26,17 @@ class PresentationApp:
         style = ttk.Style()
         style.theme_use("clam")
         font_ui = "Aptos"
-        style.configure("TFrame", background="#0f172a")
-        style.configure("Card.TFrame", background="#111827")
-        style.configure("Header.TLabel", background="#0f172a", foreground="#f8fafc", font=(font_ui, 26, "bold"))
-        style.configure("SubHeader.TLabel", background="#0f172a", foreground="#cbd5e1", font=(font_ui, 12))
-        style.configure("Title.TLabel", background="#111827", foreground="#f8fafc", font=(font_ui, 20, "bold"))
-        style.configure("Body.TLabel", background="#111827", foreground="#e2e8f0", font=(font_ui, 14), wraplength=930, justify="left")
-        style.configure("CenterBody.TLabel", background="#111827", foreground="#e2e8f0", font=(font_ui, 14), wraplength=930, justify="center")
-        style.configure("MethodTag.TLabel", background="#111827", foreground="#7dd3fc", font=("Georgia", 13, "bold italic"))
-        style.configure("Small.TLabel", background="#111827", foreground="#94a3b8", font=(font_ui, 10))
+        style.configure("TFrame", background="#f8f9fa")
+        style.configure("Card.TFrame", background="#ffffff")
+        style.configure("Header.TLabel", background="#f8f9fa", foreground="#1e293b", font=(font_ui, 26, "bold"))
+        style.configure("SubHeader.TLabel", background="#f8f9fa", foreground="#64748b", font=(font_ui, 12))
+        style.configure("Title.TLabel", background="#ffffff", foreground="#1e293b", font=(font_ui, 20, "bold"))
+        style.configure("Body.TLabel", background="#ffffff", foreground="#334155", font=(font_ui, 14), wraplength=930, justify="left")
+        style.configure("CenterBody.TLabel", background="#ffffff", foreground="#334155", font=(font_ui, 14), wraplength=930, justify="center")
+        style.configure("MethodTag.TLabel", background="#ffffff", foreground="#6366f1", font=("Georgia", 13, "bold italic"))
+        style.configure("Small.TLabel", background="#ffffff", foreground="#64748b", font=(font_ui, 10))
         style.configure("Accent.TButton", font=(font_ui, 10, "bold"), padding=(16, 10))
-        style.map("Accent.TButton", foreground=[("active", "white")], background=[("active", "#2563eb")])
+        style.map("Accent.TButton", foreground=[("active", "white")], background=[("active", "#6366f1")])
 
     def _create_page(self, title, subtitle=None, header_left_image=None, header_right_image=None, content_image=None, image_position="bottom"):
         page = ttk.Frame(self.root, style="TFrame")
@@ -48,12 +48,12 @@ class PresentationApp:
         header_row.pack(anchor="center")
 
         if header_left_image is not None:
-            ttk.Label(header_row, image=header_left_image, background="#0f172a").pack(side="left", padx=(0, 12))
+            ttk.Label(header_row, image=header_left_image, background="#f8f9fa").pack(side="left", padx=(0, 12))
 
         ttk.Label(header_row, text=title, style="Header.TLabel").pack(side="left")
 
         if header_right_image is not None:
-            ttk.Label(header_row, image=header_right_image, background="#0f172a").pack(side="left", padx=(12, 0))
+            ttk.Label(header_row, image=header_right_image, background="#f8f9fa").pack(side="left", padx=(12, 0))
 
         if subtitle:
             ttk.Label(header, text=subtitle, style="SubHeader.TLabel").pack(anchor="center", pady=(6, 0))
@@ -61,9 +61,9 @@ class PresentationApp:
         # Marco decorativo global para todas las diapositivas
         card_shell = tk.Frame(
             page,
-            bg="#1e293b",
+            bg="#e0e7ff",
             highlightthickness=1,
-            highlightbackground="#334155"
+            highlightbackground="#cbd5e1"
         )
         card_shell.pack(fill="both", expand=True, padx=26, pady=(6, 18))
 
@@ -71,7 +71,7 @@ class PresentationApp:
         card.pack(fill="both", expand=True, padx=12, pady=12)
 
         # Barra superior de acento para una apariencia más limpia
-        accent_bar = tk.Frame(card, bg="#38bdf8", height=3)
+        accent_bar = tk.Frame(card, bg="#6366f1", height=3)
         accent_bar.pack(fill="x", pady=(0, 12))
 
         # Contenedor principal para texto e imagen
@@ -83,7 +83,7 @@ class PresentationApp:
             content = ttk.Frame(main_content, style="Card.TFrame")
             content.pack(side="left", fill="both", expand=True, padx=(0, 12))
             
-            img_label = ttk.Label(main_content, image=content_image, background="#111827")
+            img_label = ttk.Label(main_content, image=content_image, background="#ffffff")
             img_label.pack(side="right", padx=12)
         elif content_image and image_position == "bottom":
             # Texto arriba, imagen abajo
@@ -93,7 +93,7 @@ class PresentationApp:
             img_frame = ttk.Frame(main_content, style="Card.TFrame")
             img_frame.pack(fill="x", pady=(12, 0))
             
-            img_label = ttk.Label(img_frame, image=content_image, background="#111827")
+            img_label = ttk.Label(img_frame, image=content_image, background="#ffffff")
             img_label.pack(anchor="center", padx=12)
         else:
             content = main_content
@@ -109,7 +109,7 @@ class PresentationApp:
         else:
             ttk.Button(nav, text="Salir", style="Accent.TButton", command=self.root.destroy).pack(side="left")
 
-        ttk.Label(nav, text=f"Ventana {page_index + 1} de {len(self.pages)}", background="#0f172a", foreground="#cbd5e1", font=("Aptos", 10)).pack(side="left", padx=18)
+        ttk.Label(nav, text=f"Ventana {page_index + 1} de {len(self.pages)}", background="#f8f9fa", foreground="#64748b", font=("Aptos", 10)).pack(side="left", padx=18)
 
         if page_index < len(self.pages) - 1:
             ttk.Button(nav, text="Siguiente", style="Accent.TButton", command=self._next_page).pack(side="right")
@@ -124,7 +124,7 @@ class PresentationApp:
             inner = ttk.Frame(row, style="Card.TFrame")
             inner.pack(anchor="center")
 
-            dot = tk.Label(inner, text="•", bg="#111827", fg="#60a5fa", font=("Aptos", 16, "bold"))
+            dot = tk.Label(inner, text="•", bg="#ffffff", fg="#6366f1", font=("Aptos", 16, "bold"))
             dot.pack(side="left", anchor="center")
             text = ttk.Label(inner, text=item, style="CenterBody.TLabel", justify="center")
             text.pack(side="left", anchor="center", padx=(8, 0))
@@ -148,15 +148,15 @@ class PresentationApp:
         """Crea una imagen placeholder con Tkinter PhotoImage"""
         image = tk.PhotoImage(width=width, height=height)
         # Llenar con color de fondo
-        image.put("#1e293b", to=(0, 0, width, height))
+        image.put("#e0e7ff", to=(0, 0, width, height))
         
         # Dibujar un borde
         for x in range(width):
-            image.put("#38bdf8", (x, 0))
-            image.put("#38bdf8", (x, height - 1))
+            image.put("#6366f1", (x, 0))
+            image.put("#6366f1", (x, height - 1))
         for y in range(height):
-            image.put("#38bdf8", (0, y))
-            image.put("#38bdf8", (width - 1, y))
+            image.put("#6366f1", (0, y))
+            image.put("#6366f1", (width - 1, y))
         
         return image
 
@@ -189,40 +189,37 @@ class PresentationApp:
         center_content.pack(expand=True)
 
         ttk.Label(center_content, text="Capítulo 1: Solución de Ecuaciones No Lineales\nRaíces de polinomios", style="Title.TLabel", anchor="center", justify="center").pack(fill="x", pady=(12, 8))
-        ttk.Label(center_content, text="Equipo:\n Aryam Desiree Méndez Sánchez -373025 \n Francisco Javier Ponce Saenz -325000\n", style="CenterBody.TLabel", anchor="center", justify="center").pack(fill="x", pady=3)
+        ttk.Label(center_content, text="Equipo:\n Aryam Desiree Méndez Sánchez -373025 \n\n Francisco Javier Ponce Saenz -325000\n", style="CenterBody.TLabel", anchor="center", justify="center").pack(fill="x", pady=3)
         ttk.Label(center_content, text="Maestro: Óscar Mauricio Borunda Carrasco\n", style="CenterBody.TLabel", anchor="center", justify="center").pack(fill="x", pady=3)
         ttk.Label(center_content, text="Materia: Métodos Numéricos\n", style="CenterBody.TLabel", anchor="center", justify="center").pack(fill="x", pady=3)
         ttk.Label(center_content, text="Fecha: 19 de mayo de 2026", style="CenterBody.TLabel", anchor="center", justify="center").pack(fill="x", pady=3)
-        ttk.Label(center_content, text="Programa desarrollado para resolver ecuaciones no lineales con dos métodos clásicos.", style="CenterBody.TLabel", anchor="center", justify="center").pack(fill="x", pady=(24, 0))
         self.pages.append((page, nav))
 
         # 2. Capítulo y tema
-        img2 = self._load_logo(["biseccion1.png"], max_size=(200, 200))
+        img2 = self._load_logo(["biseccion1.png"], max_size=(250, 250))
         if img2:
             self.images.append(img2)
         page, card, nav = self._create_page("Capítulo 1: Solución de Ecuaciones No Lineales (raíces de polinomios)", "¿Qué se estudia en este capítulo?", content_image=img2, image_position="bottom")
         method_row = ttk.Frame(card, style="Card.TFrame")
         method_row.pack(fill="x", pady=(8, 6))
-        ttk.Label(method_row, text="\nMétodos cerrados: Bisección y Falsa Posición", style="MethodTag.TLabel").pack(anchor="center", pady=(0, 12))
-        ttk.Label(method_row, text="Se necesita conocer un intervalo que encierre a la raíz", style="Body.TLabel").pack(anchor="center", pady=(0, 12))
-        self._bullet_list(card, [
-            "Método de Bisección: Divide el intervalo a la mitad en cada iteración hasta que la longitud del subintervalo sea menor que alguna tolerancia especificada",
-            "\nMétodo de Falsa Posición: Utiliza una línea secante entre los extremos del intervalo para aproximar la raíz",
-            "\nRequieren que la función cambie de signo en el intervalo inicial para asegurar la existencia de una raíz.",
-        ])
+        ttk.Label(method_row, text="MÉTODOS CERRADOS", style="MethodTag.TLabel").pack(anchor="center", pady=(0, 12))
+        ttk.Label(method_row, text="Se necesita conocer un intervalo que encierre a la raíz y que la función cambie de signo en sus extremos", style="Body.TLabel").pack(anchor="center", pady=(0, 12))
+        ttk.Label(method_row, text="Método de Bisección del Intervalo", style="MethodTag.TLabel").pack(anchor="center", pady=(0, 12))
+        ttk.Label(method_row, text="Divide el intervalo a la mitad en cada iteración hasta que la longitud del subintervalo sea menor que alguna tolerancia especificada", style="Body.TLabel", justify="center").pack(anchor="center", pady=(0, 12))
+        ttk.Label(method_row, text="Método de la Falsa Posición", style="MethodTag.TLabel").pack(anchor="center", pady=(0, 12))
+        ttk.Label(method_row, text="Utiliza una línea secante entre los extremos del intervalo para aproximar la raíz", style="Body.TLabel", justify="center").pack(anchor="center", pady=(0, 12))
         self.pages.append((page, nav))
 
         # 3. Tema y utilidad
-        img3 = self._create_placeholder_image()
+        img3 = self._load_logo(["Calculadora.png"], max_size=(250, 250))
         if img3:
             self.images.append(img3)
-        page, card, nav = self._create_page("Utilidad", "¿Para qué sirve?")
+        page, card, nav = self._create_page("Utilidad", "¿Para qué sirven?",content_image=img3, image_position="bottom")
         self._bullet_list(card, [
-            "Permite encontrar raíces cuando no es posible despejar algebraicamente la variable.",
-            "Ayuda a identificar una aproximación numérica confiable de la solución.",
-            "Es útil en ingeniería, física, economía y problemas donde aparecen modelos no lineales.",
-            "El programa muestra la evolución iterativa para entender cómo se obtiene la respuesta."
-        ])
+            "\nEncontrar raíces aproximadas de ecuaciones no lineales\n",
+            "Resolver ecuaciones donde no es posible obtener una solución exacta de manera algebraica\n",
+            "Garantizar que la raíz se mantenga dentro de un intervalo conocido\n",
+            ])
         self.pages.append((page, nav))
 
         # 4. Aplicaciones
@@ -230,12 +227,13 @@ class PresentationApp:
         if img4:
             self.images.append(img4)
         page, card, nav = self._create_page("Aplicaciones", "Dónde se usan estos métodos")
+        ttk.Label(card, text="\nEstos métodos se aplican en una amplia variedad de campos para resolver problemas que involucran ecuaciones no lineales\n", style="Body.TLabel", justify="center").pack(anchor="center", padx=28, pady=(0, 12))
         self._bullet_list(card, [
-            "Cálculo de raíces en ecuaciones de diseño estructural.",
-            "Modelos de transferencia de calor y dinámica de fluidos.",
-            "Ajuste de modelos matemáticos en ingeniería y ciencias aplicadas.",
-            "Solución de funciones transcedentes o polinomiales sin solución cerrada directa.",
-            "Análisis numérico en software educativo y de investigación."
+            "Matemáticas: Encontrar raíces de polinomios\n",
+            "Física: Resolver ecuaciones de movimiento, tiempo de caída libre, etc.\n",
+            "Electrónica: Calcular valores de circuitos eléctricos donde aparecen ecuaciones no lineales\n",
+            "Economía: Encontrar puntos de equilibrio entre ganacias y costos\n",
+            "Programación: Implementar algoritmos de búsqueda de raíces en software de análisis numérico\n",
         ])
         self.pages.append((page, nav))
 
@@ -243,14 +241,14 @@ class PresentationApp:
         img5 = self._create_placeholder_image()
         if img5:
             self.images.append(img5)
-        page, card, nav = self._create_page("Tipos de funciones", "¿Para qué funciones está diseñado el programa?")
+        page, card, nav = self._create_page("Funciones", "¿Para qué funciones está diseñado el programa?")
         self._bullet_list(card, [
-            "Funciones continuas en un intervalo dado.",
-            "Funciones polinomiales, racionales y trascendentes simples.",
-            "Expresiones con x, exp(x), log(x), log10(x), sqrt(x), sin(x), cos(x), tan(x), pi, e y abs(x).",
-            "Requiere que el intervalo tenga cambio de signo para aplicar Bisección o Falsa Posición.",
-            "No debe incluir puntos fuera del dominio real, por ejemplo log(x+1) con x ≤ -1 o divisiones por cero.",
-            "Ejemplos válidos: x**3 - 4*x + 1, (x+2)/(x-1), exp(x) - 3*x, log(x+1) - 2, sin(x) - 0.5.",
+            "\nFunciones continuas en un intervalo dado.\n",
+            "Funciones polinomiales, racionales y trascendentes simples.\n",
+            "Expresiones con x, exp(x), log(x), log10(x), sqrt(x), sin(x), cos(x), tan(x), pi, e y abs(x).\n",
+            "Requiere que el intervalo tenga cambio de signo para aplicar Bisección o Falsa Posición.\n",
+            "No debe incluir puntos fuera del dominio real, por ejemplo log(x+1) con x ≤ -1 o divisiones por cero.\n",
+            "Ejemplos válidos: x**3 - 4*x + 1, (x+2)/(x-1), exp(x) - 3*x, log(x+1) - 2, sin(x) - 0.5.\n",
             "Ejemplo mixto: (x**2 + 1)*cos(x) - sqrt(x+4)."])
         self.pages.append((page, nav))
 
@@ -258,12 +256,12 @@ class PresentationApp:
         img6 = self._create_placeholder_image()
         if img6:
             self.images.append(img6)
-        page, card, nav = self._create_page("Fórmulas", "Lo que hace la aplicación")
+        page, card, nav = self._create_page("Fórmulas", "En base a qué fórmulas está construido el programa")
         self._bullet_list(card, [
-            "\nFórmulas de Bisección:\n"
-            "\nc = (b - a) / 2\nx = a + c\nCondición: |c| ≤ tolerancia",
+            "\nFórmulas de Bisección del Intervalo:\n"
+            "\nc = (b - a) / 2\nx = a + c\nCondición:|c| ≤ tolerancia",
             "\nFórmulas de Falsa Posición:\n"
-            "\nΔx = f(a)(b-a)/(f(a)-f(b))\nx = a + Δx\nCondición: |Δx| ≤ tolerancia"
+            "\nΔx = |f(a)|(b-a)/(|f(a)|-|f(b)|)\nx = a + Δx\nCondición: |Δx| ≤ tolerancia"
         ])
         ttk.Label(card, text="Al pulsar 'Abrir programa' se cerrará esta presentación y se abrirá la interfaz principal.", style="Small.TLabel").pack(anchor="w", padx=28, pady=(18, 0))
         self.pages.append((page, nav))

@@ -243,7 +243,7 @@ class PresentationApp:
         img5 = self._create_placeholder_image()
         if img5:
             self.images.append(img5)
-        page, card, nav = self._create_page("Tipos de matrices", "¿Para qué matrices está diseñado el programa?")
+        page, card, nav = self._create_page("Datos", "¿Para qué datos está diseñado el programa?")
         self._bullet_list(card, [
             "Matrices cuadradas con coeficientes numéricos y vector de términos independientes",
             "Matrices sin ceros en la diagonal principal (para Gauss-Jordan)",

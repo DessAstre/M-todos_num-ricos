@@ -256,14 +256,14 @@ class PresentationApp:
             self.images.append(img6)
         page, card, nav = self._create_page("Procedimiento", "Lo que hace la aplicación")
         self._bullet_list(card, [
-            "\nGauss Seidel:\n"
+            "Gauss Seidel:",
             "\nEncuentra la matriz dominante",
             "\nDespeja cada variable en función de las otras",
             "\nRealiza iteraciones sucesivas hasta alcanzar la convergencia",
-            "\nRelajaciones:\n"
+            "Relajaciones:",
             "\nEncuentra la matriz dominante",
             "\nArma el cuadro base",
-            "\nRealiza iteraciones ajustando los valores para acelerar la convergencia"
+            "\nRealiza iteraciones con registros t ajustando los valores para acelerar la convergencia"
         ])
         ttk.Label(card, text="Al pulsar 'Abrir programa' se cerrará esta presentación y se abrirá la interfaz principal.", style="Small.TLabel").pack(anchor="w", padx=28, pady=(18, 0))
         self.pages.append((page, nav))

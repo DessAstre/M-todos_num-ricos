@@ -279,7 +279,7 @@ def crear_pestana_biseccion(notebook, root):
 
     entries = {'funcion': entrada_funcion, 'a': entrada_a, 'b': entrada_b, 'tol': entrada_tol, 'dec': entrada_dec, 'tipo': tipo_aprox}
 
-    btn = tk.Button(frm_inputs, text="Calcular Bisección", bg="#660016", fg="white", font=("Segoe UI", 10, "bold"),
+    btn = tk.Button(frm_inputs, text="Calcular Bisección", bg="#000F66", fg="white", font=("Segoe UI", 10, "bold"),
                     command=lambda: ejecutar_biseccion(entries, tabla, root))
     btn.grid(row=6, column=0, columnspan=2, pady=8, ipadx=8)
 
@@ -329,7 +329,7 @@ def crear_pestana_falsa(notebook, root):
 
     entries = {'funcion': entrada_funcion, 'a': entrada_a, 'b': entrada_b, 'tol': entrada_tol, 'dec': entrada_dec, 'tipo': tipo_aprox}
 
-    btn = tk.Button(frm_inputs, text="Calcular Falsa Posición", bg="#390855", fg="white", font=("Segoe UI", 10, "bold"),
+    btn = tk.Button(frm_inputs, text="Calcular Falsa Posición", bg="#0D0855", fg="white", font=("Segoe UI", 10, "bold"),
                     command=lambda: ejecutar_falsa_posicion(entries, tabla, root))
     btn.grid(row=6, column=0, columnspan=2, pady=8, ipadx=6)
 

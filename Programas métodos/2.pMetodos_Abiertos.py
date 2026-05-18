@@ -6,7 +6,7 @@ import math
 
 class NRNFrame(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent, bg="#ffbebe")
+        super().__init__(parent, bg="#beeaff")
         self._build_ui()
 
     # --- Funciones de Precisión ---
@@ -117,46 +117,46 @@ class NRNFrame(tk.Frame):
         btn_close.pack(side="right", padx=8)
 
     def _build_ui(self):
-        self.configure(bg="#ffbebe")
+        self.configure(bg="#beeaff")
         title = tk.Label(
             self,
             text="Newton-Raphson",
-            bg="#ffbebe",
-            fg="#770909",
+            bg="#beeaff",
+            fg="#092377",
             font=("Arial", 16, "bold"),
         )
         title.pack(pady=(10, 0))
 
-        frame_inputs = tk.Frame(self, pady=10, bg="#ffbebe")
+        frame_inputs = tk.Frame(self, pady=10, bg="#beeaff")
         frame_inputs.pack()
 
         # Entradas
-        tk.Label(frame_inputs, text="Función f(x):", bg="#ffbebe").pack()
+        tk.Label(frame_inputs, text="Función f(x):", bg="#beeaff").pack()
         self.entry_f = tk.Entry(frame_inputs)
         self.entry_f.insert(0, "x**3 - x - 1")
         self.entry_f.pack()
 
-        tk.Label(frame_inputs, text="Valor inicial (x0):", bg="#ffbebe").pack()
+        tk.Label(frame_inputs, text="Valor inicial (x0):", bg="#beeaff").pack()
         self.entry_x0 = tk.Entry(frame_inputs, width=10)
         self.entry_x0.insert(0, "1")
         self.entry_x0.pack()
 
-        tk.Label(frame_inputs, text="Tolerancia:", bg="#ffbebe").pack()
+        tk.Label(frame_inputs, text="Tolerancia:", bg="#beeaff").pack()
         self.entry_tol = tk.Entry(frame_inputs, width=10)
         self.entry_tol.insert(0, "0.01")
         self.entry_tol.pack()
 
-        tk.Label(frame_inputs, text="Número de cifras:", bg="#ffbebe").pack()
+        tk.Label(frame_inputs, text="Número de cifras:", bg="#beeaff").pack()
         self.entry_prec = tk.Entry(frame_inputs, width=10)
         self.entry_prec.insert(0, "3")
         self.entry_prec.pack()
 
-        tk.Label(frame_inputs, text="Tipo de aproximación:", bg="#ffbebe").pack()
+        tk.Label(frame_inputs, text="Tipo de aproximación:", bg="#beeaff").pack()
         self.combo_metodo = ttk.Combobox(frame_inputs, values=["Redondeo", "Truncamiento"], width=12)
         self.combo_metodo.current(0)
         self.combo_metodo.pack()
 
-        btn_calc = tk.Button(frame_inputs, text="Calcular", command=self.calcular, bg="#770909", fg="white")
+        btn_calc = tk.Button(frame_inputs, text="Calcular", command=self.calcular, bg="#092377", fg="white")
         btn_calc.pack(pady=10)
 
         # --- Tabla de Resultados ---
@@ -176,7 +176,7 @@ class NRNFrame(tk.Frame):
 
 class NRMFrame(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent, bg="#fda9a9")
+        super().__init__(parent, bg="#beeaff")
         self.x_sym = sp.symbols('x')
         self._build_ui()
 
@@ -295,42 +295,42 @@ class NRMFrame(tk.Frame):
         title = tk.Label(
             self,
             text="Newton-Raphson Mejorado",
-            bg="#fda9a9",
-            fg="#490202",
+            bg="#beeaff",
+            fg="#092377",
             font=("Arial", 16, "bold"),
         )
         title.pack(pady=(10, 4))
 
-        frame = tk.Frame(self, bg="#fda9a9")
+        frame = tk.Frame(self, bg="#beeaff")
         frame.pack(pady=(0, 10))
 
-        tk.Label(frame, text="Función f(x):", bg="#fda9a9").pack()
+        tk.Label(frame, text="Función f(x):", bg="#beeaff").pack()
         self.entrada_funcion = tk.Entry(frame, width=25)
         self.entrada_funcion.insert(0, "x**3 - x - 1")
         self.entrada_funcion.pack()
 
-        tk.Label(frame, text="Valor inicial x0:", bg="#fda9a9").pack()
+        tk.Label(frame, text="Valor inicial x0:", bg="#beeaff").pack()
         self.entrada_x0 = tk.Entry(frame)
         self.entrada_x0.insert(0, "1")
         self.entrada_x0.pack()
 
-        tk.Label(frame, text="Tolerancia:", bg="#fda9a9").pack()
+        tk.Label(frame, text="Tolerancia:", bg="#beeaff").pack()
         self.entrada_tol = tk.Entry(frame)
         self.entrada_tol.insert(0, "0.01")
         self.entrada_tol.pack()
 
-        tk.Label(frame, text="Cifras decimales:", bg="#fda9a9").pack()
+        tk.Label(frame, text="Cifras decimales:", bg="#beeaff").pack()
         self.entrada_cifras = tk.Entry(frame)
         self.entrada_cifras.insert(0, "3")
         self.entrada_cifras.pack()
 
-        tk.Label(frame, text="Tipo de aproximación:", bg="#fda9a9").pack()
+        tk.Label(frame, text="Tipo de aproximación:", bg="#beeaff").pack()
         self.tipo_aprox = ttk.Combobox(frame, values=["Redondeo", "Truncamiento"])
         self.tipo_aprox.pack()
         self.tipo_aprox.current(0)
 
         # Botón Calcular
-        btn = tk.Button(self, text="Calcular", bg="#490202", fg="white", command=self.calcular)
+        btn = tk.Button(self, text="Calcular", bg="#092377", fg="white", command=self.calcular)
         btn.pack(pady=10)
 
         # Tabla
